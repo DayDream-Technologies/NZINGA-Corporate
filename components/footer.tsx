@@ -25,13 +25,6 @@ const supportLinks = [
   { href: "/sustainability/", label: "Sustainability" },
 ];
 
-const legalLinks = [
-  { href: "/terms/", label: "Terms and Conditions" },
-  { href: "/privacy/", label: "Privacy Policy" },
-  { href: "/cookies/", label: "Cookie Policy" },
-  { href: "/about-site/", label: "About this Site" },
-];
-
 const socialLinks = [
   { href: "https://www.instagram.com/nzingagrp/", label: "Instagram", icon: Instagram },
   { href: "https://twitter.com/nzingagrp", label: "X (Twitter)", icon: XIcon },
@@ -176,23 +169,9 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-xs text-foreground-muted">
-            &copy; {currentYear} Nzinga Group. All rights reserved.
-          </p>
-          
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {legalLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-xs text-foreground-muted hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
+        <p className="text-xs text-foreground-muted text-center">
+          &copy; {currentYear} Nzinga Group. All rights reserved.
+        </p>
       </div>
     </footer>
   );
