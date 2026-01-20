@@ -2,13 +2,56 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Quote } from "lucide-react";
+import { ArrowRight, Quote, Music, Film, Users, Gamepad2 } from "lucide-react";
 import Hero from "@/components/hero";
 import BusinessCard from "@/components/business-card";
 import NewsCard from "@/components/news-card";
 import StatsCounter from "@/components/stats-counter";
 import { businessDivisions } from "@/lib/business-data";
 import { getLatestNews } from "@/lib/news-data";
+
+const recentHighlights = [
+  {
+    division: "Nzinga Music",
+    icon: Music,
+    color: "from-cyan-500 to-blue-500",
+    highlights: [
+      { title: "New Artist Signing", description: "Welcomed emerging R&B sensation to our roster" },
+      { title: "Studio Sessions", description: "Recording new tracks with Grammy-nominated producers" },
+      { title: "Distribution Deal", description: "Expanded global distribution to 150+ platforms" },
+    ],
+  },
+  {
+    division: "Nzinga Pictures",
+    icon: Film,
+    color: "from-purple-500 to-pink-500",
+    highlights: [
+      { title: "Safety Patrol", description: "Action-comedy feature film in active development" },
+      { title: "The Melody Series", description: "Crowdfunding campaign surpassing initial goals" },
+      { title: "New Writers Room", description: "Assembled team for upcoming drama series" },
+    ],
+  },
+  {
+    division: "Nzinga Management",
+    icon: Users,
+    color: "from-amber-500 to-orange-500",
+    highlights: [
+      { title: "Brand Partnerships", description: "Secured major endorsement deals for talent" },
+      { title: "Roster Expansion", description: "Added new entertainers and content creators" },
+      { title: "Tour Coordination", description: "Planning upcoming live performance series" },
+    ],
+  },
+  {
+    division: "Nzinga Gaming",
+    icon: Gamepad2,
+    color: "from-green-500 to-emerald-500",
+    highlights: [
+      { title: "Royal BattleField Collab", description: "Joint game development project underway" },
+      { title: "Esports Initiative", description: "Launching competitive gaming program" },
+      { title: "Creator Program", description: "Supporting gaming content creators" },
+    ],
+  },
+];
 
 export default function Home() {
   const latestNews = getLatestNews(3);
@@ -73,6 +116,101 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="divider-gradient" />
+
+      {/* Recent Highlights Section */}
+      <section className="relative py-24 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
+          >
+            <p className="text-xs md:text-sm font-medium tracking-[0.3em] text-accent mb-4">
+              ACROSS OUR DIVISIONS
+            </p>
+            <h2 className="font-serif text-heading-lg text-foreground mb-6">
+              Recent Highlights
+            </h2>
+            <p className="text-foreground-muted max-w-2xl mx-auto">
+              A glimpse into the latest activities and achievements from each of our 
+              entertainment divisions.
+            </p>
+          </motion.div>
+
+          {/* Highlights Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            {recentHighlights.map((division, divIndex) => (
+              <motion.div
+                key={division.division}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: divIndex * 0.1 }}
+                className="card p-6 md:p-8 group"
+              >
+                {/* Division Header */}
+                <div className="flex items-center gap-4 mb-6 pb-4 border-b border-border">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${division.color} flex items-center justify-center`}>
+                    <division.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-xl text-foreground group-hover:text-accent transition-colors">
+                      {division.division}
+                    </h3>
+                    <p className="text-xs text-foreground-muted">Recent Activity</p>
+                  </div>
+                </div>
+
+                {/* Highlights List */}
+                <div className="space-y-4">
+                  {division.highlights.map((highlight, hIndex) => (
+                    <motion.div
+                      key={highlight.title}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: divIndex * 0.1 + hIndex * 0.1 }}
+                      className="flex items-start gap-3"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
+                      <div>
+                        <h4 className="text-sm font-medium text-foreground mb-1">
+                          {highlight.title}
+                        </h4>
+                        <p className="text-xs text-foreground-muted leading-relaxed">
+                          {highlight.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* View More Link */}
+                <div className="mt-6 pt-4 border-t border-border">
+                  <Link
+                    href={
+                      division.division === "Nzinga Music" ? "/business/music/" :
+                      division.division === "Nzinga Pictures" ? "/business/pictures/" :
+                      division.division === "Nzinga Management" ? "/business/management/" :
+                      "/business/gaming/"
+                    }
+                    className="inline-flex items-center gap-2 text-sm text-foreground-muted hover:text-accent transition-colors group/link"
+                  >
+                    <span>View Division</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
